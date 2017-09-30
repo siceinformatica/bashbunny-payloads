@@ -17,7 +17,18 @@
 ## Features
  * Client reconnects automatically/persistence 
  * ECM_ETHERNET and HID attack
- * 
+ * Emulate a simple terminal instance.
+ * Sockets are encrypted with CSR via OpenSSL.
+ * No dependencies (pure python).
+ * Retrieve Chrome passwords.
+ * Retrieve iCloud contacts.
+ * Attempt to get iCloud password via phishing.
+ * Show local iOS backups.
+ * Download and upload files.
+ * Retrieve find my iphone devices.
+ * Attempt to get root via local privilege escalation (<= 10.10.5).
+ * Auto installer
+
 
 ## Configuration
 
@@ -66,6 +77,12 @@ root@kali:~/git/EvilOSX# ./Server.py
  
 [?] Port to listen on: 1337
 [I] Type "help" to get a list of available commands.
+> help
+help              -  Show this help menu.
+status            -  Show debug information.
+clients           -  Show a list of clients.
+connect <ID>      -  Connect to the client.
+exit              -  Close the server and exit.
 > clients
 [I] 1 client(s) available:
     0 = client_hostname
@@ -73,6 +90,28 @@ root@kali:~/git/EvilOSX# ./Server.py
 [I] Connected to "client_hostname", ready to send commands.
 ````
 
+
+Some of the other features can be found in the help menu. I have not tried them all
+
+````
+help              -  Show this help menu.
+status            -  Show debug information.
+clients           -  Show a list of clients.
+connect <ID>      -  Connect to the client.
+get_info          -  Show basic information about the client.
+get_root          -  Attempt to get root via local privilege escalation.
+download <path>   -  Downloads the file to the local machine.
+upload <path>     -  Uploads the file to the remote machine.
+chrome_passwords  -  Retrieve Chrome passwords.
+icloud_contacts   -  Retrieve iCloud contacts.
+icloud_phish      -  Attempt to get iCloud password via phishing.
+itunes_backups    -  Show the user's local iOS backups.
+find_my_iphone    -  Retrieve find my iphone devices.
+screenshot        -  Takes a screenshot of the client.
+kill_client       -  Brutally kill the client (removes the server).
+exit              -  Exits the session.
+Any other command will be executed on the connected client.
+````
 
 ## Removal of Tool
 
@@ -92,9 +131,11 @@ launchctl unload ~/Library/LaunchAgents/com.apple.EvilOSX.plist && rm -rf ~/Libr
  If the default one in this payload doesnt work, regenerate a new EvilOSX.py
  
  Run ./BUILDER and enter the appropriate information: 
-![](http://i.imgur.com/NQRPFXS.png)
+ 
 
-After copy this to your switch payload
+ ![](http://i.imgur.com/NQRPFXS.png)
+
+After, copy this to your switch payload
 
 ## Thanks
 * [@Marten4n6](https://github.com/Marten4n6/EvilOSX)
