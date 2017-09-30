@@ -115,7 +115,7 @@ Any other command will be executed on the connected client.
 
 ## Removal of Tool
 
-The file gets added to the following directory - and startup file is added to the LaunchAgents directory
+The python script gets added to users ~/Library/ directory - and startup file is added to the ~/Library/LaunchAgents directory
 ````
 rm -rf ~/Library/Containers/.EvilOSX/
 launchctl unload ~/Library/LaunchAgents/com.apple.EvilOSX.plist && rm -rf ~/Library/LaunchAgents/com.apple.EvilOSX.plist
